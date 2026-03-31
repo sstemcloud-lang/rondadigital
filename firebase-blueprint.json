@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role (admin or vigilante).",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID." },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "vigilante"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Location": {
+      "title": "Location",
+      "description": "A physical location to be scanned.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "qrValue": { "type": "string", "description": "The value encoded in the QR code." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "qrValue"]
+    },
+    "Log": {
+      "title": "Log",
+      "description": "A scan log entry.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "userName": { "type": "string" },
+        "locationId": { "type": "string" },
+        "locationName": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "locationId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles." },
+    "/locais/{locationId}": { "schema": "Location", "description": "Company locations." },
+    "/logs/{logId}": { "schema": "Log", "description": "Scan logs." }
+  }
+}
